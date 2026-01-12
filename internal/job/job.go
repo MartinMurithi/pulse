@@ -1,40 +1,31 @@
 package job
 
-import (
-	"fmt"
-	"time"
+import "time"
+
+// JobPayload is a flexible container for job-specific data
+type JobPayload map[string]any
+type JobPriority int
+
+const (
+	Low JobPriority = iota + 1
+	Medium
+	High
 )
 
-type JobPayload struct {
-	JobDescription string
-}
-
+// Job represents a unit of work in the worker queue
 type Job struct {
-	ID      int
-	Type    string
-	Payload JobPayload
+	Id              string      // unique identifier for the job
+	Type            string      // job type (e.g., send_email, generate_report)
+	Payload         JobPayload  // data required to execute the job
+	State           JobState    // current state of the job
+	Attempts        int         // number of execution attempts so far
+	MaxAttempts     int         // maximum number of retries allowed
+	RunAt           *time.Time  // scheduled execution time
+	LastRunAt       *time.Time  // timestamp of the last execution attempt
+	FinishedAt      *time.Time  // timestamp of successful completion
+	ErrorMessage    *string     // reason for last failure (if any)
+	Priority        JobPriority // priority for ordering jobs
+	IndempotencyKey string      // ensures safe retries without duplication
+	CreatedAt       time.Time   // creation timestamp
+	UpdatedAt       *time.Time  // last update timestamp
 }
-
-// Simulate a Job Producer
-
-func JobProducer() {
-
-	for i := 0; i <= 10; i++ {
-		job := Job{
-			ID:   i,
-			Type: "test_job",
-			Payload: JobPayload{
-				JobDescription: fmt.Sprintf("job description with id : %d\n", i),
-			},
-		}
-
-		fmt.Printf("submitting job [%d] to queue : job desc %s\n", job.ID, job.Type)
-
-		// Simulate Delay to show incoming job rate
-		time.Sleep(2 * time.Second)
-	}
-
-}
-
-// Store the Generated Jobs in a queue
-
