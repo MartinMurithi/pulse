@@ -79,13 +79,3 @@ func NewPool(ctx context.Context) (*Pool, error) {
 	return db, nil
 }
 
-/*
-SEEDING
-REPOSITORY
-SERVICES
-HANDLERS
-UTILS
-ROUTES
-DOCUMENTATION
-*/
-
