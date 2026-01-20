@@ -19,15 +19,6 @@ Pulse is designed to handle asynchronous workloads that must survive crashes, su
 
 ---
 
-## Tech Stack
-
-* **Language:** Go (1.22+)
-* **Database:** PostgreSQL (primary job store)
-* **Containerization & CI/CD:** Docker, GitHub Actions
-* **Monitoring & Logging:** Prometheus, Grafana, Loki
-
----
-
 ## Getting Started (Minimal)
 
 1. Start your PostgreSQL database.
